@@ -1,6 +1,6 @@
-package com.formation.ensta.battleships;
+package com.excilys.formation.battleships;
 
-public class Main {
+public class TestBoard {
 	
 	public static void main(String args[]) {
 		new Board("test").print();

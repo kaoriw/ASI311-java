@@ -1,4 +1,4 @@
-package com.formation.ensta.battleships;
+package com.excilys.formation.battleships;
 
 import java.io.IOException;
 
