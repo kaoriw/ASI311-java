@@ -99,6 +99,8 @@ public class Board implements IBoard {
 			if (hasShip(ix, iy)) {
 				throw new IllegalArgumentException("Ship overlays.");
 			}
+			ix += dx;
+			iy += dy;
 		}
 		
 		ix = x;
