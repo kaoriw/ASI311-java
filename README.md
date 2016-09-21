@@ -97,7 +97,7 @@ Rappel: Les interfaces sont des classes 100% abstraites. Elles n'ont que la déf
 Il existe deux conventions de nommage pour les interfaces : Xxx-able (Drawable, Clickable, Obserable, ...) et I-xxxx (IEngine, IListener, ...). On s'efforce en général d'utiliser l'une des deux conventions.
 
  - modifier "Board" pour lui faire implémenter l'interface "IBoard".
- - écrire les méthodes "putShip", "hasShip", "putHit" et "hasHit" qui placent les navires et les frappes dans leurs tableaux respectifs.
+ - écrire les méthodes "putShip", "hasShip", "putHit" et "getHit" qui placent les navires et les frappes dans leurs tableaux respectifs.
  - écrire la méthode "canPutShip", qui retourne vrai si le navire donné en paramètre peut être placé aux coordonnées données en paramètre.
  - modifier la méthode main() de TestBoard, afin de placer quelques navires. 
  - modifier la méthode print() de Board, afin d'afficher le label des navires à leurs emplacements respectifs.
@@ -119,7 +119,7 @@ Nous souhaitons que notre application propose au joueur de placer chacun des 5 n
 Pour cela, l'utilisateur devra entrer à la suite les positions des navires, au format "A1 n", "B4 s".
 A chaque fois que l'on récupère des données de l'utilisateur (saisie formulaire, etc), il est TRES IMPORTANT de vérifier la cohérence et l'exactitude de ces données. Il faudra donc utiliser un bloc "try... catch()" pour s'assurer que les valeurs entrées sont correctes.
 
-Afin de gagner du temps, vous pouvez utiliser la classe "ShipInputHelper" qui fournit, dont la méthode readShipInput récupère les entrées de l'utilisateur et les convertie en données exploitables. Notez bien la présence du bloc "try... catch" pour sécuriser les entrées utilisateur.
+Afin de gagner du temps, vous pouvez utiliser la classe **"InputHelper"** qui fournit, dont la méthode readShipInput récupère les entrées de l'utilisateur et les convertie en données exploitables. Notez bien la présence du bloc "try... catch" pour sécuriser les entrées utilisateur.
 
 Il ne reste plus qu'a :
  - Créer un tableau des 5 navires :
@@ -166,39 +166,7 @@ Travail demandé :
  - Dans **"AbstractShip"**, changer la méthode **"getLabel()"** "**print()**", qui retourne le label en rouge si le navire est touché à cet endroit.
  - Dans **"Board"**, changer la méthode **print()** pour afficher '.' si un Hit est null, 'X' en blanc si un hit est faux, et 'X' en rouge si un hit est vrai.
 
-NB : Ceci pourrait être utile :
-```java
-public class ColorUtil {
-
-    private ColorUtil() { // do we want to create one of '***Util' instance?
-    }
-    
-    enum Color {
-        COLOR_RESET("\u001B[0m"),
-        COLOR_BLACK("\u001B[30m"),
-        COLOR_RED("\u001B[31m"),
-        COLOR_GREEN("\u001B[32m"),
-        COLOR_YELLOW("\u001B[33m"),
-        COLOR_BLUE("\u001B[34m"),
-        COLOR_PURPLE("\u001B[35m"),
-        COLOR_CYAN("\u001B[36m"),
-        COLOR_WHITE("\u001B[37m");
-
-        private final String value;
-
-        Color(String value) {
-            this.value = value;
-        }
-    }
-
-    public static String colorize(String text, Color color) {
-        return String.format("%s%s%s", color.value, text, Color.COLOR_RESET.value);
-    }
-    public static String colorize(Character text, Color color) {
-        return colorize("" + text, color);
-    }
-}
-```
+>  NB : Vous pouvez utiliser la classe **ColorUtil** qui vous est fournie
 
 Question : 
  - Si on appelles **addStrike()** plus d'une fois par ShipState, le navire pourra donc être touché plus que le permet sa longueur. Comment gérer cet ***"état illégal"*** ?
@@ -214,28 +182,39 @@ Avant d'aller plus loin, il va falloir doter notre **"Board"** d'une méthode lu
 
 ```java
 enum Hit {
-	MISS(-1), STRIKE(-2),  DESTROYER(2), SUBMARINE(3), BATTLESHIP(4), CARRIER(5)
-	;
-	private int value;
-	Hit(int value) {
-		this.value = value;
-	}
-
-	public static Hit fromInt(int value) {
-		for (Hit hit : Hit.values()) {
-			if (hit.value == value) {
-				return hit;
-			}
+		MISS(-1, "manqué"),
+		STIKE(-2, "touché"),
+		DESTROYER(2, "Frégate"),
+		SUBMARINE(3, "Sous-marin"),
+		BATTLESHIP(4, "Croiseur"),
+		CARRIER(5, "Porte-avion")
+		;
+		private int value;
+		private String label;
+		Hit(int value, String label) {
+			this.value = value;
+			this.label = label;
 		}
-		throw new NoSuchElementException("no enum for value " + value);
-	}
-};
+
+		public static Hit fromInt(int value) {
+			for (Hit hit : Hit.values()) {
+				if (hit.value == value) {
+					return hit;
+				}
+			}
+			throw new NoSuchElementException("no enum for value " + value);
+		}
+
+		public String getLabel() {
+			return this.label;
+		}
+	};
 Hit sendHit(int x, int y);
 ```
 L'adversaire appelera donc la méthode **sendHit()** sur notre **Board**, tandis que nous appelerons **sendHit()** sur le siens. 
 L'enum **"Hit"** permet de renvoyer le status d'une frappe lancée. Les valeurs peuvent être **"MISS"** ou **"STRUCK"**, pour une frappe manquée ou réussie, ou bien le nom d'un des 4 navires lorsqu'un navire viens d'être coulé totalement. 
 
-**NB** : L'enum **"Hit"** est particulier : Il possède un constructeur, ce qui nous permet de lui faire porter une valeur. Cela sera pratique lorsque nous voudrons créer l'enum directement à partir de la longueur du navire, grace à la méthode **fromInt()**
+>  NB : L'enum **"Hit"** est particulier : Il possède un constructeur, ce qui nous permet de lui faire porter des valeur. Cela sera pratique lorsque nous voudrons créer l'enum directement à partir de la longueur du navire, grace à la méthode **fromInt()**, ou lorsque nous voudrons avoir le nom ("label") du navire détruit)
 
 Travail demandé :
  - Copier coller le code si dessus dans **IBoard**, puis l'implémenter dans **Board**.
@@ -244,31 +223,108 @@ Travail demandé :
  - Vérifier que **destroyer.isSunk()** retourne "vrai", et que le dernier appel à **"sendHit()"** retourne **Hit.DESTROYER**. Afficher "coulé" le cas échéant.
 
 Question : 
- - Que se passe t-il on appelles **sendHit()** deux fois sur la même position d'un navire ?
+ - Que se passe t-il lorsque l'on appelles **sendHit()** deux fois sur la même position d'un navire ?
+ - que renvoit la méthode **hasShip(x, y)** lorsque le navire en (x, y) a été touché? 
 
 ```sh
 git add . -A
 git commit -m"step 6"
 ```
-
-### Exercice 7 : phase de jeu.
+### Exercice 7 : IA.
 ##### Notions abordées:
- - Scanners, interface fonctionnelles
+ - Random, Listes, retour par référence
 
-A ce point, nous devrions avoir un programme qui permette de placer les 5 navires, en gérant les erreurs. Lorsque tous les navires sont placés, le programme devrait se quitter normalement. Il est maintenant temps de créer la phase de jeu. Pour ceci, nous allons créer une nouvelle classe "Game", qui possèdera sa propre fonction "main()".
+A ce point, nous devrions être capable de :
+ - saisir des coordonnées depuis le clavier
+ - placer les navires sans erreurs
+ - envoyer des frappes sur une grille
+ - détécter si un navire est "touché" ou "coulé" suite à une frappe.
 
-La classe "Game" possède : 
- - 2 attributs privés de type "Board" (un par joueur).
- - Un attribut "username"de type "String", saisi par l'utilisateur (utiliser un Scanner). 
+Nous avons tous les éléments nécéssaires à la logique de notre jeu, mais il nous manque une chose essentielle : un adversaire. 
+
+La classe **"BattleShipsAI"** vous est fournie. Elle propose une Intelligence Artificielle rudimentaire Il vous reste à compléter la méthode `void putShips(AbstractShip ships[])`, qui permet de placer les navires sur `this.board` de manière aléatoire.
+
+> NB : Notez que BattleShipsAI a besoin de deux objets **Board** (un par joueur) pour fonctionner. Votre **"Board"** implémente l'interface **"IBoard"**, ce qui permet à **"BattleShipsAI"** de savoir comment interagir avec votre Board, sans en connaitre les détails d'implémentation. **IBoard** est en quelque sorte le "Manuel d'utiisation" d'un objet **Board**.
+
+Pour tester le placement des navires, nous allons faire jouer l'IA contre elle même sur un seul Board. Ecrire une classe **TestGame** et sa fonction main(), qui devra : 
+ - initialiser un objet "Board" et l'afficher
+ - initialiser une liste de navires. Notez qu'un simple tableau pourrait suffire, mais les listes s'avèrerons utiles plus tard dans la partie Bonus.
+ - initialiser un objet **"ai"** de type **BattleShipsAI**, qui utilise le même Board pour la grille amie et adverse.
+ - créer un compteur qui compte le nombres de navires détruits.
+ - tant qu'il reste des navires, 
+    -  appeler la méthode `ai.sendHit()`
+    -  afficher les coordonnées du hit et sont résultat ("touché" ou "manqué", ou "XXX coulé"). La méthode `IBoard.Hit.getLabel()` vous sera utile.
+    -  afficher le nouvel état du board
+ 
+Vous pouvez utiliser la méthode "`sleep(int ms)`" suivante pour temporiser la boucle de jeu : 
+```java
+private static void sleep(int ms) {
+	try {
+		Thread.sleep(ms);
+	} catch (InterruptedException e) {
+		e.printStackTrace();
+	}
+}
+```
+
+Travail à faire : 
+ - Compléter **putShips()** dans **BattleShipsAI** (utiliser un **java.util.Random**) 
+ - Ecrire une classe **TestGame**
+
+>  NB : Vous remarquerez que **List** utilise une syntaxe avec des chevrons (<>). C'est ce qu'on appelles un **"Generic"** (équivallent des "templates" en c++). C'est un paramètre qui indique que les éléments contenus dans la liste serons du type passé entre chevrons.
+
+Questions : 
+ - La méthode `sendHit(int[] coords)` est sensée choisir une frappe à des coordonnées aléatoires. Pourquoi lui passe t-on des coordonnées en paramètres ?
+ - Quelles différences voyez vous entre une List et un simple tableau?
+ - Quelle type de liste avez vous utilisé ? Commentez.
+
+```sh
+git add . -A
+git commit -m"step 7"
+``` 
+### Exercice 8 : Place au jeu!
+##### Notions abordées:
+ - Scanners
+
+Notre jeu est presque prêt. Pour l'instant, la boucle de jeu consiste en une IA qui joue toute seule. Il est temps de lui rajouter un vrai adversaire. 
+
+Travail à faire :
+ - Renommer la classe **"TestGame"** en **"Game"** (rappelez vous : les IDE savent faire des refactors) 
+ - ajouter un 2ème objets "Board" (un par joueur).
+ - permettre la saisie du nom du joueur 1 au clavier. (utiliser un scanner)
+ - modifier la boucle principale : Tant que aucun joueurs sont en jeu : 
+    - afficher le nom du joueur 1 ainsi que son Board
+    - saisir les coordonnés de la frappe (`InputHelper.readCoordInput()`)
+    - envoyer la frappe, 
+    - afficher les coordonnées du hit et sont résultat et réafficher le board.
+    - recevoir la frappe de l'adversaire
+    - afficher les coordonnées du hit et sont résultat et réafficher le board.
+
+```sh
+git add . -A
+git commit -m"step 8"
+``` 
+### Exercice 9 : Bonus 1
+Rendre le tirage des navires aléatoire (nombre et types de navires différents pour chaque joueurs)
+
+### Exercice 10 : Bonus 2
+##### Notions abordées:
+ - serializable, Files, inputStreams
+On souhaite sauvegarder la partie avant de quitter l'application, de telle sorte à ce que la dernière partie jouée soit automatiquement restaurée au relancement du jeu.
+
+L'idée est de, à chaque tour du jeu, écrire sur le disque dur un fichier qui mémorise l'état actuel du jeu. Au lancement du jeu, on vérifie la présence de ce fichier et on le charge le cas échéant.
+
+> "Oula, c'est bien trop compliqué à mettre en oeuvre..."
+
+A vrai dire, cette fonctionnalité ne devrait prendre que quelques minutes à implémenter! Tout objet Java peut être sauveagardé en fichier, sous peu qu'il soit **"Serializable"**. Un objet dit "serializable" est un objet qui implémente l'interface "Serializable", et dont tous les attributs implémentent aussi cette interface. 
+
+Exemple de serialization d'un objet : 
+'''java
+TODO
+'''
 
 
-La classe "BattleShipsAI" vous est fournie. Elle propose une Intelligence Artificielle rudimentaire. 
 
-Comme votre "Board" implémente l'interface "IBoard", 
-
-Après avoir initialisé le Board de votre joueur, 
-avons besoin d'initialiser 2 Board différents (un par joueur). 
-// TODO IA. 
 
 
 
