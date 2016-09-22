@@ -78,7 +78,7 @@ La class AbstractShip possède les éléments suivants :
 Vous devez : 
  - Créer la classe AbstractShip
  - Créer les classes Destroyer, Submarine, Battleship, Carrier, qui héritent de AbstractShip.
- - Les classes filles devront posséder un constructeur par défaut (qui placent l'orientation à "null"), et un constructeur avec argument qui prends en paramètre l'Orientation).
+ - Les classes filles devront posséder un constructeur par défaut (sans argument, qui initialise notament l'orientation à "null"), et un constructeur prenant en argument l'orientation).
 
 Questions : 
  - En quoi l'héritage est-il utile dans notre cas ?
