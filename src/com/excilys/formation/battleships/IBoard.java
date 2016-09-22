@@ -8,12 +8,20 @@ public interface IBoard {
 
 	/**
 	 *
-	 * @return the size of the Board
+	 * @return The size of the Board
 	 */
 	int getSize();
 
 	/**
-	 * put the given ship at the given coord
+	 * Return true if the specified ship can be placed in the given coordinates
+	 * @param ship The ship to place on the board
+	 * @param x
+	 * @param y
+	 */
+	boolean canPutShip(AbstractShip ship, int x, int y);
+
+	/**
+	 * Put the given ship at the given coordinates
 	 * @param ship The ship to place on the board
 	 * @param x
 	 * @param y
@@ -21,10 +29,9 @@ public interface IBoard {
 	void putShip(AbstractShip ship, int x, int y);
 
 	/**
-	 *
 	 * @param x
 	 * @param y
-	 * @return true if a ship is located at the given coords
+	 * @return True if a ship is located at the given coords
 	 */
 	boolean hasShip(int x, int y);
 
