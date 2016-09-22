@@ -7,14 +7,6 @@ import java.util.NoSuchElementException;
 public interface IBoard {
 
 	/**
-	 * Sends a hit at the given position
-	 * @param x
-	 * @param y
-	 * @return status for the hit (eg : strike or miss)
-	 */
-	Hit sendHit(int x, int y);
-
-	/**
 	 *
 	 * @return the size of the Board
 	 */
