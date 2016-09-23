@@ -13,14 +13,6 @@ public interface IBoard {
 	int getSize();
 
 	/**
-	 * Return true if the specified ship can be placed in the given coordinates
-	 * @param ship The ship to place on the board
-	 * @param x
-	 * @param y
-	 */
-	boolean canPutShip(AbstractShip ship, int x, int y);
-
-	/**
 	 * Put the given ship at the given coordinates
 	 * @param ship The ship to place on the board
 	 * @param x
@@ -47,7 +39,7 @@ public interface IBoard {
 	 * Get the state of a hit at the given position
 	 * @param x
 	 * @param y
-	 * @return
+	 * @return true if hit is a 'strike'
 	 */
 	Boolean getHit(int x, int y);
 }
