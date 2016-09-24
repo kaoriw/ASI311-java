@@ -15,7 +15,6 @@ public final class InputHelper {
 	}
 
 	public static class CoordInput {
-		public String orientation;
 		public int x;
 		public int y;
 	}

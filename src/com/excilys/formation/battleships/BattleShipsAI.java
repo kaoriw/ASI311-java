@@ -1,13 +1,8 @@
 package com.excilys.formation.battleships;
 
-import com.excilys.formation.battleships.ship.AbstractShip;
-
 import java.io.Serializable;
 import java.util.*;
 
-/**
- * Created by nicolas on 20/09/16.
- */
 public class BattleShipsAI implements Serializable {
 
     /**
@@ -51,8 +46,16 @@ public class BattleShipsAI implements Serializable {
      * @param ships the ships to put
      */
     public void putShips(AbstractShip ships[]) {
-        // TODO complete me.
-        // TODO you my want to use method 'this.canPutShip(...)'
+        int x, y;
+        AbstractShip.Orientation o;
+        Random rnd = new Random();
+        AbstractShip.Orientation[] orientations = AbstractShip.Orientation.values();
+        for (AbstractShip s : ships) {
+            do {
+                // TODO use Random to pick a random x, y & orientation
+            } while(!canPutShip(s, x, y));
+            board.putShip(s, x, y);
+        }
     }
 
     /**
@@ -60,7 +63,7 @@ public class BattleShipsAI implements Serializable {
      * @param coords array must be of size 2. Will hold the coord of the send hit.
      * @return the status of the hit.
      */
-    public IBoard.Hit sentHit(int[] coords) {
+    public Hit sendHit(int[] coords) {
         int res[] = null;
         if (coords == null || coords.length < 2) {
             throw new IllegalArgumentException("must provide an initialized array of size 2");
@@ -94,9 +97,9 @@ public class BattleShipsAI implements Serializable {
         if (lastStrike == null) {
             res = pickRandomCoord();
         }
-        IBoard.Hit hit = opponent.sendHit(res[0], res[1]);
-        board.setHit(hit != IBoard.Hit.MISS, res[0], res[1]);
-        if (hit != IBoard.Hit.MISS) {
+        Hit hit = opponent.sendHit(res[0], res[1]);
+        board.setHit(hit != Hit.MISS, res[0], res[1]);
+        if (hit != Hit.MISS) {
             if (lastStrike != null) {
                 lastVertical = guessOrientation(lastStrike, res);
             }
@@ -108,6 +111,9 @@ public class BattleShipsAI implements Serializable {
         return hit;
     }
 
+    /* ***
+     * Private
+     */
 
     private boolean canPutShip(AbstractShip ship, int x, int y) {
         AbstractShip.Orientation o = ship.getOrientation();
