@@ -190,7 +190,7 @@ Travail demandé :
 
 >  NB : Vous pouvez utiliser la classe **ColorUtil** qui vous est fournie
 ```java
-System.out.print(ColorUtil.colorize("Hello World in COLOR!!!", ColorUtil.Color.RED));
+System.out.print(ColorUtil.colorize("Hello World with COLOR!!!", ColorUtil.Color.RED));
 ```
 
 >  NB : Pour les utilisateurs de eclipse, vous pouvez télécharger ce plugin pour que la console eclipse supporte les couleurs : https://marketplace.eclipse.org/content/ansi-escape-console
