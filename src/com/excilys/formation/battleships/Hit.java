@@ -3,7 +3,7 @@ package com.excilys.formation.battleships;
 
 import java.util.NoSuchElementException;
 
-enum Hit {
+public enum Hit {
     MISS(-1, "manqué"),
     STIKE(-2, "touché"),
     DESTROYER(2, "Frégate"),
