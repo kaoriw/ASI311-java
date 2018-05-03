@@ -143,16 +143,20 @@ Exemple d'utilisation de InputHelper :
 
 ```
 
-Il ne reste plus qu'à modifier notre classe TestBoard:
- - Créer un tableau des 5 navires :
+Il ne reste plus qu'à modifier notre classe Player en complétant la méthode putShips():
+
+ - Appeler la méthode `readShipInput` tant que tous les navires ne sont pas correctement placés
+ - Paramétrer le Board avec les valeurs retournées
+ - Afficher l'état actuel du Board entre chaque saisies
+ 
+ Ensuite pour tester, vous pouvez créer une liste de bateaux :
+  - Créer un tableau des 5 navires :
 	```java
 	AbstractShip[] ships = {
 		new Destroyer(), new Submarine(), new Submarine(), new BattleShip(), new Carrier()
 	};
 	```
- - Appeler la méthode `readShipInput` tant que tous les navires ne sont pas correctement placés
- - Paramétrer le Board avec les valeurs retournées
- - Afficher l'état actuel du Board entre chaque saisies
+  Ensuite instanciez un Player et appelez la méthode putShips() de celui-ci.
 
 Question :
  - Quelle classe Java permet de lire les entrées clavier ?
