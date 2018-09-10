@@ -24,16 +24,11 @@ On compte les types de navires suivants :
 
 Nous allons créer une classe "Board", qui représente les 2 grilles sur lesquelles sont placés les navires et les frappes.
 
- - Créer la classe Board, composée d'un nom, d'un tableau 2D de "Character" pour les navires, et d'un tableau 2D de "Boolean" pour les frappes.
+ - Créer la classe Board, composée d'un nom, d'un tableau 2D de "Character" pour les navires, et d'un tableau 2D de "boolean" pour les frappes.
  - Créer un constructeur avec arguments, qui prends en entrée un nom, et la taille de la grille.
  - Créer un constructeur avec argument, qui prends en entrée un nom seulement et initialise la grille avec une taille de 10.
  - Créer une méthode print dans Board, qui efface la console et dessine les 2 grilles côte à côte.
  - Créer une classe TestBoard et sa méthode main(), afin de tester l'affichage des grilles.
-
-NB : il est possible de vider la console avec la commande suivante:
-```java
-try {Runtime.getRuntime().exec("clear");} catch (IOException e) {}
-```
 
 Dans un premier temps, nous ne nous occupons pas des navires. Le "Board" reste donc vide.
 
@@ -53,7 +48,7 @@ Navires : 		 Frappes :
 10. . . . . B B B B .     10. . . . . . . . . .
 ```
 Question :
- - que se passe-t-il si la taille de grille est trop grande ? ( > taille de la fenêtre) ? Proposer une solution pour y remédier.
+ - que se passe-t-il si la taille de grille est trop grande ? ( > taille de la console) ? Proposer une solution pour y remédier.
 
 Lorsque l'étape est terminée, entrer les commandes suivantes pour valider l'étape.
 ```sh
@@ -71,7 +66,7 @@ La class AbstractShip possède les éléments suivants :
  - les méthodes getLabel() et getLength(), getOrientation() et setOrientation(/*...*/).
 
 Vous devez :
- - Créer la classe AbstractShip
+ - Créer la classe abstraite AbstractShip
  - Créer les classes Destroyer, Submarine, Battleship, Carrier, qui héritent de AbstractShip.
  - Les classes filles devront posséder un constructeur par défaut (qui placent l'orientation à "null"), et un constructeur avec argument qui prends en paramètre l'Orientation).
 
@@ -170,7 +165,7 @@ git commit -m"step 4"
  - "refactors", exceptions
 
 La conception actuelle du jeu nous pose maintenant 2 problèmes :
- - Les "Hits" peuvent en réalité avoir 3 états : "Inconnu", "touché", et "manqué". un **boolean** ne suffis plus. On peut en revanche se servir d'un **Boolean** qui peut être soit vrai, faux ou null. (Un **enum** serait aussi un choix judicieux)
+ - Les "Hits" peuvent en réalité avoir 3 états : "par défaut", "touché", et "manqué". un **boolean** ne suffis plus. On peut en revanche se servir d'un **Boolean** qui peut être soit vrai, faux ou null. (Un **enum** serait aussi un choix judicieux)
  - Les navires sont placés avec un tableau de **"Character"**. Comment savoir où le navire commence et se termine, et donc s'il est totalement détruit ?
 
 Il est courant de devoir modifier la conception d'un logiciel en cours de développement, et les raisons peuvent être multiples : Changement soudain du cahier des charges, erreur de conception, difficulté technique imprévue... Heureusement, ceci n'est pas toujours dramatique et il est parfois suffisant de quelques petites modifications pour remettre les choses dans l'ordre. C'est ce qu'on appelles dans le jargon un "refactor". Nos IDE sont générlement capables de nous assister dans cette tâche.
@@ -214,7 +209,7 @@ Avant d'aller plus loin, il va falloir doter notre **"Board"** d'une méthode lu
 ```java
 enum Hit {
 		MISS(-1, "manqué"),
-		STIKE(-2, "touché"),
+		STRIKE(-2, "touché"),
 		DESTROYER(2, "Frégate"),
 		SUBMARINE(3, "Sous-marin"),
 		BATTLESHIP(4, "Croiseur"),
