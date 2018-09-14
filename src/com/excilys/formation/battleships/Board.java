@@ -17,7 +17,9 @@ public class Board {
         hits = new boolean[10][10];
     }
 
-    public void print(){
+    //créer exception pour taille tableau (class extend exception)
+    public void print() throws BoardSizeException{
+        if(ships[0].length > 27) throw new BoardSizeException("Board size exceeds limit.");
         char letter = 'A';
         String letters = "";
         System.out.println("Navires :               Frappes :");
