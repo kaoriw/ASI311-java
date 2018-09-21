@@ -5,8 +5,8 @@ import com.excilys.formation.battleships.Ships.AbstractShip;
 import java.util.Arrays;
 
 public class Board implements IBoard{
-    private String name;
-    private char[][] ships;
+    private String name;  //String, Boolean = wrapper, peut être null
+    private char[][] ships; //encapsulation : attribut privé + getters + setters
     private boolean[][] hits;
     private int size;
 
@@ -46,7 +46,7 @@ public class Board implements IBoard{
 
     //créer exception pour taille tableau (class extends exception)
     public void print() throws BoardException{
-        if(size > 100) throw new BoardException("Board size exceeds limit.");
+        if(size > 100) throw new BoardException("La grille est trop grande.");
         char first = 'A';
         String boards = "Navires :";
         String letters = "  ";
@@ -93,63 +93,64 @@ public class Board implements IBoard{
             switch (ship.getOrientation()) {
                 case NORTH:
                         while(!flag && j<ship.getLength()){
-                            if(ships[x+j][y] != '.') flag = true;
+                            if(ships[y+j][x] != '.') flag = true;
                             j++;
                         }
                         if(!flag){
                             for (int i=0; i<ship.getLength(); i++){
 
-                                ships[x+i][y] = ship.getLabel();
+                                ships[y+i][x] = ship.getLabel();
                             }
                         }
                         else
-                            throw new BoardException("Placement error: could not place ship.");
+                            throw new BoardException("Erreur de placement. Changez de position");
                     break;
                 case EAST:
                         while(!flag && j<ship.getLength()){
-                            if(ships[x][y-j] != '.') flag = true;
+                            if(ships[y][x-j] != '.') flag = true;
                             j++;
                         }
                         if(!flag){
                             for(int i=0; i<ship.getLength(); i++){
-                                ships[x][y-i] = ship.getLabel();
+                                ships[y][x-i] = ship.getLabel();
                             }
                         }
                         else
-                            throw new BoardException("Placement error: could not place ship.");
+                            throw new BoardException("Erreur de placement. Changez de position");
                     break;
                 case WEST:
                         while(!flag && j<ship.getLength()){
-                            if(ships[x][y+j] != '.') flag = true;
+                            if(ships[y][x+j] != '.') flag = true;
                             j++;
                         }
                         if(!flag){
                             for(int i=0; i<ship.getLength(); i++){
-                                ships[x][y+i] = ship.getLabel();
+                                ships[y][x+i] = ship.getLabel();
                             }
                         }
                         else
-                            throw new BoardException("Placement error: could not place ship.");
+                            throw new BoardException("Erreur de placement. Changez de position");
                     break;
                 case SOUTH:
                         while(!flag && j<ship.getLength()){
-                            if(ships[x-j][y] != '.') flag = true;
+                            if(ships[y-j][x] != '.') flag = true;
                             j++;
                         }
                         if(!flag){
                             for(int i=0; i<ship.getLength(); i++){
-                                ships[x-i][y] = ship.getLabel();
+                                ships[y-i][x] = ship.getLabel();
                             }
                         }
                         else
-                            throw new BoardException("Placement error: could not place ship.");
+                            throw new BoardException("Erreur de placement. Changez de position");
                     break;
             }
 
+        }catch(IndexOutOfBoundsException e){
+            System.err.println(e.getMessage());
+            System.out.println("Erreur de placement. Essayez une autre position !");
         }
-        catch(IndexOutOfBoundsException e){
-            System.out.println(e.getMessage());
-        }
+
     }
 
     public boolean hasShip(int x, int y){

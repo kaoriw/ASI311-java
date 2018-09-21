@@ -1,26 +1,41 @@
 package com.excilys.formation.battleships;
 
-import com.excilys.formation.battleships.Ships.Battleship;
-import com.excilys.formation.battleships.Ships.Destroyer;
+import com.excilys.formation.battleships.Ships.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestBoard {
     public static void main(String[] args) {
-        Board test = new Board("test", 20);
+        Board b1 = new Board("b1", 10);
+        Board b2 = new Board("b2", 10);
         try{
-            Destroyer d = new Destroyer(Orientation.EAST);
-            Battleship b = new Battleship(Orientation.SOUTH);
-            System.out.println(test.getShip(1,2));
+              //Ex1-3
+//            Destroyer d = new Destroyer(Orientation.EAST);
+//            BattleShip b = new BattleShip(Orientation.SOUTH);
+//
+//            b1.putShip(d,5,8);
+//            b1.putShip(b, 6, 5);
+//
+//            b1.print();
+            //Ex 4
+            List<AbstractShip> shipList = new ArrayList<AbstractShip>();
+            shipList.add(new Destroyer());
+            shipList.add(new Submarine());
+            shipList.add(new Submarine());
+            shipList.add(new BattleShip());
+            shipList.add(new Carrier());
 
-            test.putShip(d,4,5);
-            test.putShip(b, 10, 5);
+            Player p1 = new Player(b1, b2, shipList);
 
-            System.out.println(test.getShip(10,4));
-            test.print();
+            p1.putShips();
+            b1.print();
         }
         catch(BoardException E)
         {
-            System.out.println(E.getMessage());
+            System.err.println(E.getMessage());
         }
+
     }
 
 }

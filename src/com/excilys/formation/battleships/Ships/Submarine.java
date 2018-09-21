@@ -10,7 +10,7 @@ public class Submarine extends AbstractShip{
         setOrientation(null);
     }
 
-    public Submarine(Orientation shipOr){
-        super("Submarine", 'S', 3, shipOr);
+    public Submarine(Orientation or){
+        super("Submarine", 'S', 3, or);
     }
 }

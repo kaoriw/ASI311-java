@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 
-public final class InputHelper {
+public final class InputHelper { //final: ne peut pas être dérivée
 	
 	private InputHelper() {}
 

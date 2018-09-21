@@ -2,15 +2,15 @@ package com.excilys.formation.battleships.Ships;
 
 import com.excilys.formation.battleships.Orientation;
 
-public class Battleship extends AbstractShip{
-    public Battleship(){
+public class BattleShip extends AbstractShip{
+    public BattleShip(){
         setName("Battleship");
         setLabel('B');
         setLength(4);
         setOrientation(null);
     }
 
-    public Battleship(Orientation shipOr){
-        super("Battleship", 'B', 4, shipOr);
+    public BattleShip(Orientation or){
+        super("Battleship", 'B', 4, or);
     }
 }

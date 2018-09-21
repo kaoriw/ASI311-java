@@ -40,10 +40,10 @@ public abstract class AbstractShip {
     }
 
     public Orientation getOrientation(){
-        return or;
+        return this.or;
     }
-    public void setOrientation(Orientation shipOr){
-        or = shipOr;
+    public void setOrientation(Orientation or){
+        this.or = or;
     }
 
 
