@@ -16,7 +16,7 @@ public interface IBoard {
    * @param x
    * @param y
    */
-  void putShip(AbstractShip ship, int x, int y);
+  void putShip(AbstractShip ship, int x, int y) throws BoardException;
 
 	/**
 	 *

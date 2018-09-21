@@ -13,6 +13,7 @@ public class TestBoard {
 
             test.putShip(d,4,5);
             test.putShip(b, 10, 5);
+
             System.out.println(test.getShip(10,4));
             test.print();
         }

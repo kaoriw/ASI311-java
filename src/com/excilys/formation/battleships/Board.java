@@ -86,7 +86,7 @@ public class Board implements IBoard{
 
 
     //(x,y) front of ship
-    public void putShip(AbstractShip ship, int x, int y){
+    public void putShip(AbstractShip ship, int x, int y) throws BoardException{
         boolean flag = false;
         int j=0;
         try{
@@ -103,7 +103,7 @@ public class Board implements IBoard{
                             }
                         }
                         else
-                            System.out.println("Placement error: could not place ship.");
+                            throw new BoardException("Placement error: could not place ship.");
                     break;
                 case EAST:
                         while(!flag && j<ship.getLength()){
@@ -116,7 +116,7 @@ public class Board implements IBoard{
                             }
                         }
                         else
-                            System.out.println("Placement error: could not place ship.");
+                            throw new BoardException("Placement error: could not place ship.");
                     break;
                 case WEST:
                         while(!flag && j<ship.getLength()){
@@ -129,7 +129,7 @@ public class Board implements IBoard{
                             }
                         }
                         else
-                            System.out.println("Placement error: could not place ship.");
+                            throw new BoardException("Placement error: could not place ship.");
                     break;
                 case SOUTH:
                         while(!flag && j<ship.getLength()){
@@ -142,7 +142,7 @@ public class Board implements IBoard{
                             }
                         }
                         else
-                            System.out.println("Placement error: could not place ship.");
+                            throw new BoardException("Placement error: could not place ship.");
                     break;
             }
 
