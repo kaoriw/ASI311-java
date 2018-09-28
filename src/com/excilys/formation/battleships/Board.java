@@ -47,7 +47,7 @@ public class Board implements IBoard{
     public ShipState[][] getShips(){ return this.ships; }
     public Boolean[][] getHits(){ return this.hits; }
     //créer exception pour taille tableau (class extends exception)
-    public void print() throws BoardException{
+    public void print(Boolean[][] opponentHits) throws BoardException{
         if(size > 100) throw new BoardException("La grille est trop grande.");
         char first = 'A';
         String boards = "Navires :";
@@ -89,10 +89,10 @@ public class Board implements IBoard{
             rows += String.valueOf(i+1);
             if(i<9) rows += " ";
             for(int j=0; j< this.size; j++){
-                if (this.hits[i][j] == null){
+                if (opponentHits[i][j] == null){
                     rows += '.';
                 }
-                else if (!this.hits[i][j]){
+                else if (!opponentHits[i][j]){
                     rows += ColorUtil.colorize("X", ColorUtil.Color.WHITE);
                 }
                 else
@@ -105,6 +105,7 @@ public class Board implements IBoard{
             rows = "";
         }
     }
+
 
 
     //(x,y) front of ship

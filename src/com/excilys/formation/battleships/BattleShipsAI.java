@@ -114,7 +114,7 @@ public class BattleShipsAI implements Serializable {
             res = pickRandomCoord();
         }
         Hit hit = opponent.sendHit(res[0], res[1]);
-        board.setHit(hit != Hit.MISS, res[0], res[1]);
+        //board.setHit(hit != Hit.MISS, res[0], res[1]);
         if (hit != Hit.MISS) {
             if (lastStrike != null) {
                 lastVertical = guessOrientation(lastStrike, res);
@@ -177,7 +177,7 @@ public class BattleShipsAI implements Serializable {
     }
 
     private boolean isUndiscovered(int x, int y) {
-        return x >= 0 && x < size && y >= 0 && y < size && board.getHit(x, y) == null;
+        return x >= 0 && x < size && y >= 0 && y < size && opponent.getHit(x, y) == null;
     }
 
     private int[] pickRandomCoord() {

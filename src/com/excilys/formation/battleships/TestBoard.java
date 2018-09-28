@@ -41,12 +41,12 @@ public class TestBoard {
             //Ex 6
             Destroyer d = new Destroyer(Orientation.EAST);
             b1.putShip(d, 5, 8);
-            b1.print();
+            b1.print(b1.getHits());
             b1.sendHit(5,8);
             //b1.sendHit(5,8);
             //System.out.println(b1.sendHit(4,8));
             if(b1.sendHit(4,8) == Hit.DESTROYER){
-                b1.print();
+                b1.print(b1.getHits());
                 System.out.println("Le dernier sendHit renvoie Hit.DESTROYER et le navire a coulé !");
             }
             System.out.println("Navire coulé : "+d.isSunk());

@@ -19,7 +19,7 @@ public class TestGame {
 
         Board b = new Board("b", 10);
         try{
-            b.print();
+            b.print(b.getHits());
         }
         catch (BoardException E){
             System.err.println(E.getMessage());
@@ -36,7 +36,7 @@ public class TestGame {
 
         ai.putShips(shipsArr);
 
-        int coords[] = {0,0};
+        int coords[] = new int[2];
 
         Hit hit;
 
@@ -54,13 +54,13 @@ public class TestGame {
             }
 
             try{
-                b.print();
+                b.print(b.getHits());
             }
             catch (BoardException E){
                 System.err.println(E.getMessage());
             }
 
-            sleep(3000);
+            sleep(1000);
         }
         while(ctr != ships.size());
     }

@@ -67,7 +67,7 @@ public class Player {
             ++i;
             done = i == 5;
             try {
-                board.print();
+                board.print(this.opponentBoard.getHits());
             }
             catch (BoardException E){
                 System.err.println(E.getMessage());
@@ -116,9 +116,6 @@ public class Player {
                 coords[1] = y;
             }
 
-            // TODO call sendHit on this.opponentBoard
-
-            // TODO : Game expects sendHit to return BOTH hit result & hit coords.
             // return hit is obvious. But how to return coords at the same time ? --> use pointer/array in arguments
 
         } while (!done);
