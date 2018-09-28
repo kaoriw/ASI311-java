@@ -18,6 +18,7 @@ public enum Hit {
         this.label = label;
     }
 
+
     public static Hit fromInt(int value) {
         for (Hit hit : Hit.values()) {
             if (hit.value == value) {

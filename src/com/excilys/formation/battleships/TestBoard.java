@@ -2,10 +2,6 @@ package com.excilys.formation.battleships;
 
 import com.excilys.formation.battleships.Ships.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.SynchronousQueue;
-
 public class TestBoard {
     public static void main(String[] args) {
         Board b1 = new Board("b1", 10);

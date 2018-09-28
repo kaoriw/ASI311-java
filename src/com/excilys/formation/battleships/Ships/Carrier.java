@@ -1,7 +1,5 @@
 package com.excilys.formation.battleships.Ships;
 
-import com.excilys.formation.battleships.Orientation;
-
 public class Carrier extends AbstractShip {
     public Carrier(){
         setName("Carrier");

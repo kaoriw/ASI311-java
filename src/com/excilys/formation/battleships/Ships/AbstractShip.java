@@ -1,7 +1,5 @@
 package com.excilys.formation.battleships.Ships;
 
-import com.excilys.formation.battleships.Orientation;
-
 public abstract class AbstractShip {
 
     private String name;
@@ -55,4 +53,5 @@ public abstract class AbstractShip {
     }
 
     public boolean isSunk(){ return this.strikeCount == this.length;}
+
 }

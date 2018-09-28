@@ -115,13 +115,13 @@ public class Board implements IBoard{
             switch (ship.getOrientation()) {
                 case NORTH:
                         while(!flag && j<ship.getLength()){
-                            if(this.hasShip(x,y+j)) flag = true;
+                            if(this.hasShip(x,y-j)) flag = true;
                             j++;
                         }
                         if(!flag){
                             for (int i=0; i<ship.getLength(); i++){
 
-                                this.ships[y+i][x].setShip(ship);
+                                this.ships[y-i][x].setShip(ship);
                             }
                         }
                         else
@@ -129,22 +129,9 @@ public class Board implements IBoard{
                     break;
                 case EAST:
                         while(flag && j<ship.getLength()){
-                            if(this.hasShip(x-j, y)) {
+                            if(this.hasShip(x+j, y)) {
                                 flag = true;
                             }
-                            j++;
-                        }
-                        if(!flag){
-                            for(int i=0; i<ship.getLength(); i++){
-                                this.ships[y][x-i].setShip(ship);
-                            }
-                        }
-                        else
-                            throw new BoardException("Erreur de placement. Changez de position");
-                    break;
-                case WEST:
-                        while(!flag && j<ship.getLength()){
-                            if(this.hasShip(x+j, y)) flag = true;
                             j++;
                         }
                         if(!flag){
@@ -155,14 +142,27 @@ public class Board implements IBoard{
                         else
                             throw new BoardException("Erreur de placement. Changez de position");
                     break;
-                case SOUTH:
+                case WEST:
                         while(!flag && j<ship.getLength()){
-                            if(this.hasShip(x, y-j)) flag = true;
+                            if(this.hasShip(x-j, y)) flag = true;
                             j++;
                         }
                         if(!flag){
                             for(int i=0; i<ship.getLength(); i++){
-                                this.ships[y-i][x].setShip(ship);
+                                this.ships[y][x-i].setShip(ship);
+                            }
+                        }
+                        else
+                            throw new BoardException("Erreur de placement. Changez de position");
+                    break;
+                case SOUTH:
+                        while(!flag && j<ship.getLength()){
+                            if(this.hasShip(x, y+j)) flag = true;
+                            j++;
+                        }
+                        if(!flag){
+                            for(int i=0; i<ship.getLength(); i++){
+                                this.ships[y+i][x].setShip(ship);
                             }
                         }
                         else
@@ -184,7 +184,7 @@ public class Board implements IBoard{
         hits[y][x] = hit;
     }
 
-    public boolean getHit(int x, int y){
+    public Boolean getHit(int x, int y){
         return hits[y][x];
     }
 

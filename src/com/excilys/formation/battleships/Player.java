@@ -1,7 +1,8 @@
 package com.excilys.formation.battleships;
 
 import com.excilys.formation.battleships.Ships.AbstractShip;
-import java.io.Serializable;
+import com.excilys.formation.battleships.Ships.Orientation;
+
 import java.util.List;
 
 public class Player {

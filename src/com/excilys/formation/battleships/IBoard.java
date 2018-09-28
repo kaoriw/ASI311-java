@@ -40,7 +40,7 @@ public interface IBoard {
 	 * @param y
 	 * @return
 	 */
-	boolean getHit(int x, int y);
+	Boolean getHit(int x, int y);
 
 	/**
 	 * Sends a hit at the given position
