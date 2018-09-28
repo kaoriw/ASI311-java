@@ -5,11 +5,12 @@ import com.excilys.formation.battleships.Orientation;
 public abstract class AbstractShip {
 
     private String name;
-    private char label;
+    private Character label;
     private int length;
     private Orientation or;
+    private int strikeCount;
 
-    public AbstractShip(String name, char label, int length, Orientation or){
+    public AbstractShip(String name, Character label, int length, Orientation or){
         this.name = name;
         this.label = label;
         this.length = length;
@@ -25,10 +26,10 @@ public abstract class AbstractShip {
         this.name = name;
     }
 
-    public char getLabel(){
+    public Character getLabel(){
         return label;
     }
-    public void setLabel(char label){
+    public void setLabel(Character label){
         this.label = label;
     }
 
@@ -46,5 +47,12 @@ public abstract class AbstractShip {
         this.or = or;
     }
 
+    public int getStrikeCount() { return this.strikeCount;}
+    public void setStrikeCount(int strikeCount) { this.strikeCount = strikeCount;}
 
+    public void addStrike(){
+        this.strikeCount++;
+    }
+
+    public boolean isSunk(){ return this.strikeCount == this.length;}
 }
