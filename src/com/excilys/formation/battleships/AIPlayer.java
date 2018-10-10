@@ -14,7 +14,7 @@ public class AIPlayer extends Player {
 
     // TODO AIPlayer must not inherit "keyboard behavior" from player. Call ai instead.
 
-    public void putShips(){
+    public void putShips(int nbShips){
         ai.putShips(this.ships);
     }
 

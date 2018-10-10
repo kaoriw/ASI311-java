@@ -21,13 +21,13 @@ public class Player {
     /**
      * Read keyboard input to get ships coordinates. Place ships on given coordinates.
      */
-    public void putShips() {
+    public void putShips(int nbShips) {
         boolean done = false;
         boolean success = false;
         int i = 0;
 
         do {
-            AbstractShip s = ships[i];
+            AbstractShip s = this.ships[i];
             success = false;
             while(!success) {
                 String msg = String.format("placer %d : %s(%d)", i + 1, s.getName(), s.getLength());
@@ -65,7 +65,7 @@ public class Player {
 
             // TODO when ship placement successful
             ++i;
-            done = i == 5;
+            done = i == nbShips;
             try {
                 board.print(this.opponentBoard.getHits());
             }

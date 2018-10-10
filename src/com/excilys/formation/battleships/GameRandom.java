@@ -3,12 +3,9 @@ package com.excilys.formation.battleships;
 import com.excilys.formation.battleships.Ships.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
-public class Game {
+public class GameRandom {
 
     /* ***
      * Constants
@@ -25,46 +22,67 @@ public class Game {
     /* ***
      * Methods
      */
-    public Game() {
+    public GameRandom() {
 
     }
 
-    public Game init() {
+    public AbstractShip randomShip(Random rnd){
+        int n = rnd.nextInt(5);
+        switch(n) {
+            case 1:
+                return new BattleShip();
+            case 2:
+                return new Carrier();
+            case 3:
+                return new Destroyer();
+            case 4:
+                return new Submarine();
+        }
+        return null;
+    }
+
+    public GameRandom init() {
 
 //        if (!loadSave()) {
-            // init attributes
-            System.out.println("entre ton nom:");
+        // init attributes
+        System.out.println("entre ton nom:");
 
-            // TODO use a scanner to read player name
-            sin = new Scanner(System.in);
+        // TODO use a scanner to read player name
+        sin = new Scanner(System.in);
 
-            // TODO init boards
-            Board b1, b2;
-            b1 = new Board(sin.nextLine());
-            b2 = new Board("AI");
+        // TODO init boards
+        Random rnd = new Random();
+        int nbShips = 0;
+        while(nbShips == 0 ){
+            nbShips = rnd.nextInt(3);
+        }
+        System.out.println("nbShips = " + nbShips);
+        Board b1, b2;
+        b1 = new Board(sin.nextLine());
+        b2 = new Board("AI");
 
-            // TODO init this.player1 & this.player2
-            List<AbstractShip> ships1 = new ArrayList<AbstractShip>();
+        // TODO init this.player1 & this.player2
+        List<AbstractShip> ships1 = new ArrayList<AbstractShip>();
+        List<AbstractShip> ships2 = new ArrayList<AbstractShip>();
 
-            ships1 = this.createDefaultShips();
+            for (int i=0; i<nbShips; i++){
+            ships1.add(this.randomShip(rnd));
+            ships2.add(this.randomShip(rnd));
+        }
 
-            List<AbstractShip> ships2 = new ArrayList<AbstractShip>();
+        this.player1 = new Player(b1, b2, ships1);
+        this.player2 = new AIPlayer(b2, b1, ships2);
 
-            ships2 = this.createDefaultShips();
+        try{
+            b1.print(b2.getHits());
+        }
+        catch(BoardException E){
+            System.err.println(E.getMessage());
+        }
 
-            this.player1 = new Player(b1, b2, ships1);
-            this.player2 = new AIPlayer(b2, b1, ships2);
-
-            try{
-                b1.print(b2.getHits());
-            }
-            catch(BoardException E){
-                System.err.println(E.getMessage());
-            }
-
-            // place player ships
-            player1.putShips(5);
-            player2.putShips(5);
+        // place player ships
+        player1.putShips(nbShips);
+        player2.putShips(nbShips);
         //}
         return this;
     }
@@ -199,7 +217,7 @@ public class Game {
     }
 
     public static void main(String args[]) {
-        new Game().init().run();
+        new GameRandom().init().run();
     }
 
 }

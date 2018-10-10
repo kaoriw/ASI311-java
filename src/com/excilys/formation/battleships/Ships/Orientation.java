@@ -21,6 +21,7 @@ public enum Orientation {
             if (or.value == value) {
                 return or;
             }
+            else continue;
         }
         throw new NoSuchElementException("no enum for value " + value);
     }

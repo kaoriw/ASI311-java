@@ -74,7 +74,7 @@ public class Board implements IBoard{
                 }
                 else
                 {
-                    if(this.ships[i][j].isSunk()){
+                    if(this.ships[i][j].getStruck()){
                         rows += this.ships[i][j].toString(); //label en rouge
                     }
                     else {
